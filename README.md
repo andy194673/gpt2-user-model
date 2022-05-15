@@ -1,10 +1,8 @@
 # gpt2-user-model
 
-Although the model seems was  using Alex's 
-
 Note: this model is still under development and has not been empirically evaluated.
 
-The model has been only tested using Alex's evaluation script and show superiority over user simulators in Convlab.
+The model has been only tested using Alex's evaluation script and show superiority over user simulators in Convlab in corresponding metrics.
 
 
 ## Set up environment
