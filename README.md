@@ -8,5 +8,7 @@
 
 ## Pre-process data
 ```console
->> 
+>> python utils/preprocess_sgd.py SGD-data-path
 ```
+`SGD-data-path`: the data path to original the SGD dataset
+The processed data will be stored at `processed_data/sgd` folder
