@@ -1,6 +1,6 @@
 import os, sys
 from tqdm import tqdm
-from parse_sgd import *
+from analysis_sgd import *
 from utils_sgd import *
 
 '''
