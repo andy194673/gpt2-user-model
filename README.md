@@ -14,13 +14,16 @@ The model has been only tested using Alex's evaluation script and show superiori
 ```
 
 ## Pre-process data
+### SGD
 ```console
 >> python utils/preprocess_sgd.py SGD-data-path
->> python utils/preprocess_multiwoz.py MultiWOZ-data-path
 ```
-
 `SGD-data-path`: data path to the original SGD dataset
 
+### MultiWOZ
+```console
+>> python utils/preprocess_multiwoz.py MultiWOZ-data-path
+```
 `MultiWOZ-data-path`: data path to the original MultiWOZ v2.2 dataset
 
 The processed data will be stored in `processed_data/sgd` and `processed_data/multiwoz` folders
