@@ -33,7 +33,7 @@ def iter_data_folder(data_path, split, remove_dial_switch):
 			continue
 		file_path = os.path.join(data_path, split, f)
 		iter_file(file_path, data_split, remove_dial_ids, total_dial_ids, remove_dial_switch)
-	print('Done {} | total {} dialogues | load {} dialogues | remove {} dialogues'.format(split, len(total_dial_ids), len(data_split), len(remove_dial_ids)))
+	print('Done collecting {} | total {} dialogues | load {} dialogues | remove {} dialogues'.format(split, len(total_dial_ids), len(data_split), len(remove_dial_ids)))
 	return data_split
 
 

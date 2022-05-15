@@ -3,17 +3,17 @@ from tqdm import tqdm
 from analysis_sgd import *
 from utils_sgd import *
 
-'''
-Pre-processing script for SGD
-  - "The annotations for a turn are grouped into frames, where each frame corresponds to a single service"
-  - values in "slot_values" in user "state" is a list where (spoken) variations are considered, e.g., tomorrow, 8/2
+'''pre-processing script for SGD
+
+The annotations for a turn are grouped into frames, where each frame corresponds to a single service
+The values of "slot_values" in user "state" is a list, where spoken variations are considered, e.g., tomorrow, 8/2
 '''
 
 class DialMetaData():
-	def __init__(self, dial_id, dial, service2meta):
+	def __init__(self, dial_id, dial):
 		self.dial_id = dial_id
 		self.turn_meta_list, self.scenario = self.parse(dial) # None for system turn
-		self.linearise_turns(service2meta)
+		self.linearise_turns()
 
 
 	def parse(self, dial):
@@ -52,12 +52,12 @@ class DialMetaData():
 		return turn_meta_list, scenario
 
 
-	def linearise_turns(self, service2meta):
+	def linearise_turns(self):
 		# linearise necessary meterials
 		for turn_meta in self.turn_meta_list:
 			if turn_meta is None:
 				continue
-			turn_meta._linearise(self.scenario, service2meta)
+			turn_meta._linearise(self.scenario)
 
 
 class TurnMetaData():
@@ -65,7 +65,7 @@ class TurnMetaData():
 		self.dial_id = dial_id
 		self.sys_turn, self.usr_turn = sys_turn, usr_turn
 		self.empty_token = "_Empty_"
-		assert self.empty_token in special_tokens["additional_special_tokens"]
+		assert self.empty_token in SPECIAL_TOKENS["additional_special_tokens"]
 
 		# intent
 		self.usr_intent, self.service = self._get_intent(usr_turn, prev_intent)
@@ -216,11 +216,11 @@ class TurnMetaData():
 		self.goal_change = compare_slot_values_in_state(prev_state_sv, curr_state_sv) # True if goal changes
 
 
-	def _linearise(self, scenario, service2meta):
+	def _linearise(self, scenario):
 		self.linear_act = {}
 		self.linear_act["sys"] = self._linearise_act(self.act2sv["sys"])
 		self.linear_act["usr"] = self._linearise_act(self.act2sv["usr"])
-		self.linear_goal = self._linearise_goal(self.usr_constraints, scenario, service2meta)
+		self.linear_goal = self._linearise_goal(self.usr_constraints, scenario)
 
 
 	def _linearise_act(self, act2sv):
@@ -240,7 +240,7 @@ class TurnMetaData():
 			sv = act2sv[act] # dict{slot: value}
 
 			act = "_{}_".format(act) # act is special token
-			assert act in special_tokens["additional_special_tokens"]
+			assert act in SPECIAL_TOKENS["additional_special_tokens"]
 			act_wrap = wrap_element("ACT", act)
 			res = add_str(res, act_wrap)
 
@@ -268,18 +268,18 @@ class TurnMetaData():
 		# special token value
 		if value in ["True", "False"]: # Empty is already in the form of "_Empty_"
 			value = "_{}_".format(value)
-			assert value in special_tokens["additional_special_tokens"]
+			assert value in SPECIAL_TOKENS["additional_special_tokens"]
 			return value
 		return value
 
 
 	def _basic_normalise_slot(self, slot):
-		if slot not in special_tokens["additional_special_tokens"]:
+		if slot not in SPECIAL_TOKENS["additional_special_tokens"]:
 			slot = slot.replace("_", " ") # e.g., `date_of_journey` -> `date of journey`
 		return slot
 
 
-	def _linearise_goal(self, constraints, scenario, service2meta):
+	def _linearise_goal(self, constraints, scenario):
 		'''
 			linearise goal representation which consists of several parts:
 			scenario, task (intent), task description, constraints with informable and requestable
@@ -302,7 +302,7 @@ class TurnMetaData():
 		res = add_str(res, intent_wrap)
 
 		# task description
-		description = service2meta[self.service]["intents"][self.usr_intent]["description"]
+		description = SERVICE2META[self.service]["intents"][self.usr_intent]["description"]
 		description_warp = wrap_element("DESC", description)
 		res = add_str(res, description_warp)
 
@@ -353,12 +353,12 @@ def collect_examples(dial_id, dial_meta, examples):
 		num += 1
 
 
-def prepare_data_seq(service2meta, data, out_data_path):
+def prepare_data_seq(data, out_data_path):
 	for split in DATA_SPLIT:
 		examples = {}
 		for dial_num, dial_id in enumerate(tqdm(sorted(data[split].keys()))):
 			dial = data[split][dial_id]
-			dial_meta = DialMetaData(dial_id, dial, service2meta)
+			dial_meta = DialMetaData(dial_id, dial)
 			collect_examples(dial_id, dial_meta, examples)
 
 		with open("{}/{}.json".format(out_data_path, split), "w") as f:
@@ -372,14 +372,15 @@ if __name__ == "__main__":
 		print("usage: python utils/preprocess_sgd.py sgd-data-path")
 		sys.exit(1)
 
+	# Set data path
 	data_path = sys.argv[1]
 	out_data_path = "./processed_data/sgd/"
 	os.makedirs(out_data_path, exist_ok=True)
 
-	# Load data and material
-	service2meta, _, _ = load_schema(data_path)
-	special_tokens = get_special_tokens()
+	# Load data and material as global var
+	SERVICE2META, INTENTS, SLOTS = load_schema(data_path)
+	SPECIAL_TOKENS = get_special_tokens()
 	data = collect_data(data_path, remove_dial_switch=True)
 
 	# Process data
-	prepare_data_seq(service2meta, data, out_data_path)
+	prepare_data_seq(data, out_data_path)
