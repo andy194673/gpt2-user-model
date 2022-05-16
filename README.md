@@ -2,7 +2,7 @@
 
 Note: this model is still under development and has not been empirically evaluated.
 
-The model has been only tested using Alex's evaluation script and show superiority over user simulators in Convlab in corresponding metrics.
+The model has been only tested internally using [CGDF1 evaluation script](https://github.com/alexcoca/gcdf1), a user simulator evalator at semantic level, and showed superiority over user simulators in Convlab in corresponding metrics.
 
 
 ## Set up environment
