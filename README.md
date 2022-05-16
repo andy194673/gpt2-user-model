@@ -59,6 +59,7 @@ Run the following command to interact with the trained user model where you play
 >> python multiwoz_interact.py $model_checkpoint_path
 ```
 Example dialogue through interaction:
+
 ![alt text](https://github.com/andy194673/gpt2-user-model/blob/main/.images/example-1.png)
 ![alt text](https://github.com/andy194673/gpt2-user-model/blob/main/.images/example-2.png)
 ![alt text](https://github.com/andy194673/gpt2-user-model/blob/main/.images/example-3.png)
