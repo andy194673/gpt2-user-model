@@ -44,13 +44,13 @@ Model checkpoints will be stored at `checkpoint` folder.
 
 
 ## Interaction (MultiWOZ model only)
-Run the following command to interact with the trained user model
+Run the following command to interact with the trained user model where you play the dialogue agent and provide the system response.
 
 ```console
 >> cd interaction/
 >> python multiwoz_interact.py model_checkpoint_path
 ```
-
+Example dialogue through interaction:
 ![alt text](https://github.com/andy194673/gpt2-user-model/blob/main/.images/example-1.png)
 ![alt text](https://github.com/andy194673/gpt2-user-model/blob/main/.images/example-2.png)
 ![alt text](https://github.com/andy194673/gpt2-user-model/blob/main/.images/example-3.png)

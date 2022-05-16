@@ -655,9 +655,9 @@ class NeuralAgent: # crazyusermodel
 		self._get_scenario_str()
 		self.current_constraints = {} # init
 		self._prepare_current_constraints(self.complete_goal["intents"], list(self.slot_types.keys()), if_reset_reqt=True)
-		print("input goal:\n", self.current_goal, "\n")
-		print("complete goal:\n", self.complete_goal, "\n")
-		print("current constraints:\n", self.current_constraints, "\n")
+#		print("input goal:\n", self.current_goal, "\n")
+#		print("complete goal:\n", self.complete_goal, "\n")
+#		print("current constraints:\n", self.current_constraints, "\n")
 		# sys.exit(1)
 
 
