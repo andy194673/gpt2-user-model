@@ -1,9 +1,7 @@
 # gpt2-user-model
-An end-to-end GPT-2 based user simulator for task-oriented dialogue, developed on both the [MultiWOZ dataset](https://github.com/budzianowski/multiwoz) and [SGD dataset](https://github.com/google-research-datasets/dstc8-schema-guided-dialogue).
+An end-to-end GPT-2 based user simulator for task-oriented dialogue, developed on both the [MultiWOZ dataset](https://github.com/budzianowski/multiwoz) and the [SGD dataset](https://github.com/google-research-datasets/dstc8-schema-guided-dialogue).
 
-Note: this model is still under development and has not been empirically evaluated.
-
-The model has been only tested internally using [CGDF1 evaluation script](https://github.com/alexcoca/gcdf1), a user simulator evalator at semantic level, and showed superiority over user simulators in Convlab in corresponding metrics.
+Note: this model is still under development and has not been empirically evaluated. The model has been only tested internally using [CGDF1 evaluation script](https://github.com/alexcoca/gcdf1), a user simulator evalator at semantic level, and showed some superiority over user simulators in Convlab2 in corresponding metrics.
 
 
 ## Set up environment
