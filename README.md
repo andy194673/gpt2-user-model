@@ -14,14 +14,39 @@ The model has been only tested using Alex's evaluation script and show superiori
 ## Pre-process data
 ### SGD
 ```console
->> python utils/preprocess_sgd.py SGD-data-path
+>> python utils/preprocess_sgd.py SGD_data_path
 ```
-`SGD-data-path`: data path to the original SGD dataset
+`SGD_data_path`: data path to the original SGD dataset
 
 ### MultiWOZ
 ```console
->> python utils/preprocess_multiwoz.py MultiWOZ-data-path
+>> python utils/preprocess_multiwoz.py MultiWOZ_data_path
 ```
-`MultiWOZ-data-path`: data path to the original MultiWOZ v2.2 dataset
+`MultiWOZ_data_path`: data path to the original MultiWOZ v2.2 dataset
 
-The processed data will be stored in `processed_data/sgd` and `processed_data/multiwoz` folders
+The processed data will be stored in `processed_data/sgd` and `processed_data/multiwoz` folders.
+
+
+## Training
+```console
+>> bash train.sh dataset
+```
+`dataset`: specified dataset for model training. Options are `SGD`, `MultiWOZ` or `Joint`. Use `Joint` to train on an aggregated dataset.
+
+Model checkpoints will be stored at `checkpoint` folder.
+
+
+## Decoding
+```console
+>> bash decode.sh dataset model_checkpoint_path
+```
+`model_checkpoint_path`: the checkpoint path to a trained model
+
+
+## Interaction (MultiWOZ model only)
+Run the following command to interact with the trained user model
+
+```console
+>> cd interaction/
+>> python multiwoz_interact.py model_checkpoint_path
+```

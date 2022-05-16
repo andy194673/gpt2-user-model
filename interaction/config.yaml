@@ -1,0 +1,12 @@
+model:
+#  path: "../checkpoint/MultiWOZ-full_checkpoint_step340k/"
+  goal_update:
+    finish_inform: "loose" # loose or strict
+
+schema_path: "./schema.json"
+
+decode:
+  dec_max_len: 1024
+  num_beams: 1
+  temperature: 1.0
+  do_sample: False
