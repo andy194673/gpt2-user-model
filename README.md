@@ -50,3 +50,6 @@ Run the following command to interact with the trained user model
 >> cd interaction/
 >> python multiwoz_interact.py model_checkpoint_path
 ```
+
+![alt text](https://github.com/andy194673/gpt2-user-model/blob/main/.images/example-1.png)
+
